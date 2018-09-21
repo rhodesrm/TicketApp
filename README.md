@@ -1,5 +1,5 @@
 # cs411
-CS411 Project
+
 
 ###### Commands to sync your repository with the master: <br />
 ```
