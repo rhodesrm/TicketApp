@@ -1,9 +1,9 @@
 # cs411
 CS411 Project
 
-#Commands to sync your repository with the master <br />
-#Commands must be done while terminal is inside a folder that the computer knows is a repository <br />
-	(this command only needs to be done the first time)  <br />
+Commands to sync your repository with the master <br />
+(must be done while terminal is inside a folder that the computer knows is a repository) <br />
+(this command only needs to be done the first time)  <br />
   git remote add upstream https://github.com/rhodesrm/cs411.git <br />
 	git fetch upstream <br />
 	git checkout master <br />
