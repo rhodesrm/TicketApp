@@ -1,5 +1,3 @@
-# cs411
-
 
 ###### Commands to sync your repository with the master: <br />
 ```
