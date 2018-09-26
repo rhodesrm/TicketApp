@@ -1,3 +1,6 @@
+#### CS411 Music Application
+###### ==================================================================
+
 
 ###### Commands to sync your repository with the master: <br />
 ```
