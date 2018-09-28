@@ -29,17 +29,13 @@ Other Information/Thought Process:
 Pitch Idea #2 : Ticket Selling App
 ----------------------------------
 
-Buying concert tickets can be stressful, given the many sites, like StubHub, SeatGeek, and Ticketmaster, where concert tickets are posted at different prices, for different sections, and with different hidden fees charged by the site. Users can log in through Spotify to find nearby concerts from artists they like listening to, and get the best seats for the best price. By integrating all the available tickets from different ticket-selling sites into one common web app that can show users the view from their seat and incorporating site-specific convenience fees into the full price of the ticket, we hope to offer a new method for users to smartly buy their concert tickets at a fair price. 
-
 Defining the Problem:
 ---------------------
 
-It can be hard to find people with similar music tastes. When buying tickets, fees are hidden and can add up to be costly. If you're trying to find the best price for tickets, it can be hard and confusing bouncing in between several sites for a concert. When you're buying your ticket, you don't always know if your seat is going to be good.
+Buying concert tickets can be stressful, given the many sites, like StubHub, SeatGeek, and Ticketmaster, where concert tickets are posted at different prices, for different sections, and with different hidden fees charged by the site. To improve user experience, we want to make an app where users can log in (to Spotify or Apple Music) to find nearby concerts from artists they listen to, and get the best seats for the best price. We want to offer a new method of ticket-buying by integrating all available tickets from different ticket-selling sites into one common web app that shows users views from potential seats and incorporates site-specific convenience fees into the full price of the ticket to offer easy, transparent transactions.
 
 Other Information/Thought Process:
 ----------------------------------
-
-Buying concert tickets is stressful, even with sites like Ticketmaster and Seatgeek. It can be hard to keep track of when your favorite artists are going on tour near you and, when you do find out, looking through each ticket seller can take a long time. Even if you find a seat, you probably don’t know how your view is and checkout usually results in huge hidden fees. 
 
 -Have users create a username and password (store in database)
 -Have users sign into Spotify for artist-event matching (Use Spotify API)
