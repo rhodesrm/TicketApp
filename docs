@@ -17,10 +17,10 @@ Other Information/Thought Process:
 -Use the Spotify API to find common songs in users’ playlists first and then spot similar genres/likes listed on their profiles.and go through their playlists and recommend people they are compatible with
 -Also use Apple Music APIs so users can have music source of choice
 -Use Google Maps/Geolocation is match only nearby users - maybe set a limit to the range or allow users to set this.
--Need some other API to use here as the above does not count as the 2nd API
--Workload could be varied. If we use databases from a third party, then it will take less time comparing to we make the database ourselves. (4-10 hrs)
--Since we are going to have our own UI design, the front-end design would get more time. (3-6 hrs)
--Need to link everything (APIs) together and make connection with our app, workload could be varied from 5 to 10 hrs. 
+-Use messaging API so that users are able to talk to each other 
+-Workload could be varied. If we use databases from a third party, then it will take less time comparing to we make the database ourselves. (10-20 hrs)
+-Since we are going to have our own UI design, the front-end design would get more time. (around 10 hrs)
+-Need to link everything (APIs) together and make connection with our app, workload could be varied from 10 to 20 hrs. 
 -Combining things together: workload varied based on what we use and what features we want to add.
 -*Workload based on group.
 
@@ -45,9 +45,10 @@ Buying concert tickets is stressful, even with sites like Ticketmaster and Seatg
 -Have users sign into Spotify for artist-event matching (Use Spotify API)
 -Put big ticket sellers in one place (ticketmaster, seatgeek, stubhub) and display added fees clearly with each ticket price
 use AViewFromMySeat API to show views from various seats in the selected concert venue
--Database workload varied. (4-10 hrs)
--Since we are using Spotify and other ticket sellers’ API, the front-end design in this project might be easier. (2-5 hrs)
--Back-end development could be hard since we need to connect and combine everything we have into our app. (5-10hrs)
+-Database workload varied. (15-20 hrs)
+-Since we are going to have our own UI design, the front-end design would need more time. (around 10hrs)
+-Need to link everything (front and back end) (10-20 hrs)
+-Back-end development could be hard since we need to connect and combine everything we have into our app. (15-20hrs)
 -Workload hrs could be varied based on what feature we decide to add.
 -*Workload based on  group. 
 
