@@ -1,0 +1,60 @@
+Group Members: Nicole Enos, Ryan Karjadi, Robin Rhodes, Peter Zhang
+
+Pitch Idea #1 : Compatibility via Spotify Playlists 
+---------------------------------------------------
+
+Research shows that the number one topic people discuss when given the task of getting to know each other is taste in music. Taste in music can be an important factor for identifying and bonding with other people. Our goal is to develop a web app that can connect users with similar tastes in music. By connecting through Apple Music and Spotify, we can identify markers like genre, release date, artist, and other factors that can be used to analyze a user’s taste in music and connect them to others nearby with similar taste. 
+
+Defining the Problem:	
+---------------------
+Sometimes it’s hard when you enter college, a new city, etc. to find friends or a group of people you can talk with. Maybe you’re shy or have some unique tastes in certain things. Whatever the case is, studies have shown that music is the most common topic people use when given the task of getting acquainted, so why not use that to link people together. Even if your taste in music is unique, users will be able to list certain likes and/or dislikes to aid in matching.
+
+Other Information/Thought Process:
+----------------------------------
+-Have users create a basic account with name, location, likes/dislikes, link to Spotify
+-Have users sign into Spotify using OAuth
+-Have user data stored within a database: username and passwords
+-Use the Spotify API to find common songs in users’ playlists first and then spot similar genres/likes listed on their profiles.and go through their playlists and recommend people they are compatible with
+-Also use Apple Music APIs so users can have music source of choice
+-Use Google Maps/Geolocation is match only nearby users - maybe set a limit to the range or allow users to set this.
+-Use messaging API so that users are able to talk to each other 
+-Workload could be varied. If we use databases from a third party, then it will take less time comparing to we make the database ourselves. (10-20 hrs)
+-Since we are going to have our own UI design, the front-end design would get more time. (around 10 hrs)
+-Need to link everything (APIs) together and make connection with our app, workload could be varied from 10 to 20 hrs. 
+-Combining things together: workload varied based on what we use and what features we want to add.
+-*Workload based on group.
+
+
+
+Pitch Idea #2 : Ticket Selling App
+----------------------------------
+
+Defining the Problem:
+---------------------
+
+Buying concert tickets can be stressful, given the many sites, like StubHub, SeatGeek, and Ticketmaster, where concert tickets are posted at different prices, for different sections, and with different hidden fees charged by the site. To improve user experience, we want to make an app where users can log in (to Spotify or Apple Music) to find nearby concerts from artists they listen to, and get the best seats for the best price. We want to offer a new method of ticket-buying by integrating all available tickets from different ticket-selling sites into one common web app that shows users views from potential seats and incorporates site-specific convenience fees into the full price of the ticket to offer easy, transparent transactions.
+
+Other Information/Thought Process:
+----------------------------------
+
+-Have users create a username and password (store in database)
+-Have users sign into Spotify for artist-event matching (Use Spotify API)
+-Put big ticket sellers in one place (ticketmaster, seatgeek, stubhub) and display added fees clearly with each ticket price
+use AViewFromMySeat API to show views from various seats in the selected concert venue
+-Database workload varied. (15-20 hrs)
+-Since we are going to have our own UI design, the front-end design would need more time. (around 10hrs)
+-Need to link everything (front and back end) (10-20 hrs)
+-Back-end development could be hard since we need to connect and combine everything we have into our app. (15-20hrs)
+-Workload hrs could be varied based on what feature we decide to add.
+-*Workload based on  group. 
+
+----------------------------------------
+APIs for Either Pitches (can be limited)
+----------------------------------------
+https://www.programmableweb.com/api/spotify-web
+https://www.programmableweb.com/api/apple-music
+
+https://www.programmableweb.com/api/ticketmaster-partner
+https://www.programmableweb.com/api/seatgeek
+https://www.programmableweb.com/api/stubhub
+https://www.programmableweb.com/api/view-my-seat
