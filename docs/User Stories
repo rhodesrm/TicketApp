@@ -1,1 +1,53 @@
+## User Stories
+======
+
+User Story 1:
+- A new user wants to create an account through their Spotify account and view concert tickets that reflect the artists they listen to. 
+The new user would be prompted to select either Spotify or Apple Music to log in with, would select Spotify, and then see concert tickets. 
+- First, the user sees a splash page with an option to log in, create an account with either Apple Music or Spotify, or continue without 
+creating an account. 
+- The user chooses to sign in with their Spotify account. An authorization window pops up and the user verifies their Spotify credentials
+and is taken to the main page.
+- They are shown the main page, which has a list of recommended concerts based on listening history and a range of ticket prices. There is
+also an “Explore” section, with concerts nearby by artists the user does not have a listening history for, but which they may be interested
+in given their taste in similar artists and genres. 
+
+User Story 2:
+- A logged in user browses concert tickets and makes a purchase. A user with an account linked to Spotify or Apple Music will open the app
+to the home page. They will see recommended concerts, and click through to compare the tickets from various websites as well as be able to
+click the ‘Explore’ section or search bar.
+- The logged in user will start on the main home page and will see a list of relevant concerts along with a range of ticket prices for the
+event.
+- The user sees that a band they like will be playing in their area and they click through the event to see the list of tickets and their
+respective prices
+- (Look at story number 4: “Browsing concert tickets from artist-specific, venue-specific list and making a purchase” for continuation of
+this story)
+
+User Story 3:
+- A non logged-in user browses concert tickets and compares them. A user without an account linked to Spotify or Apple music would land
+on the main page and be able to scroll through concerts in their area.
+- The not logged-in user sees a splash page with an option to log in, create an account with either Apple Music or Spotify, or continue 
+without creating an account. User chooses to continue without creating an account.
+- User will be directed to the main page, but will not have a section with concerts organized by their music taste. Rather, the music 
+will be organized by which concerts were most popular in their area
+- The user could then click a specific concert they’re interested in to see an artist, specific, venue-specific list of tickets
+- (Look at story number 4: “Browsing concert tickets from artist-specific, venue-specific list and making a purchase” for continuation of
+this story)
+
+User Story 4:
+- Browsing concert tickets from artist-specific, venue-specific list and making a purchase: regardless of whether the user has an account
+or not, they will be able to browse tickets confined to a specific concert venue.
+- User will be able to toggle options at the top of the page, such as how many tickets they want, price ranges, and sorting options
+- While finding a favorable seat, they can click the venue view button by each ticket to look at the stage view from that seat’s 
+particular section (with View From My Seat API) (could throw exception, see exception 1)
+- After finding the ticket(s) they want, the user will select how many of the available tickets they want and then click the ‘Proceed to
+Cart’ button
+- User will be redirected to the website selling the ticket and they will be able to enter that site’s required information to complete
+the purchase
+
+
+Exceptions to be aware of:
+View From My Seat API doesn’t have data on particular section a user is looking for, throw error message to user and allow them to exit
+the view popup OR only allow button option to look at pictures from certain section if there is View From my Seat API data available for
+the section
 
