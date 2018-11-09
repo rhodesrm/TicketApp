@@ -1,2 +1,16 @@
 Sequence Diagram:
 https://i.imgur.com/6aUkoc9.png
+
+
+Things to be cached:
+    - Attraction IDs
+    - Venue IDs
+    - Event IDs
+    - Classification IDs
+    - Segments IDs
+    - Search Keywords
+    - ViewFromMySeat pictures
+    
+Implementing Cache: Instead of making so many API calls, try to diminish by caching user search results 
+                    and pictures from available seats in a specific venue
+
