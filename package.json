@@ -1,13 +1,25 @@
 {
-  "author": "Spotify",
-  "name": "web-api-auth-examples",
-  "description": "Basic examples of the Spotify authorization flows through OAuth 2",
-  "version": "0.0.2",
-  "dependencies": {
-    "cookie-parser": "1.3.2",
-    "express": "~4.16.0",
-    "cors": "^2.8.4",
-    "querystring": "~0.2.0",
-    "request": "~2.83.0"
-  }
+  "name": "cs411",
+  "version": "1.0.0",
+  "description": "Web App personalizing the concert-going experience",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "testing"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhodesrm/cs411.git"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rhodesrm/cs411/issues"
+  },
+  "homepage": "https://github.com/rhodesrm/cs411#readme"
 }
