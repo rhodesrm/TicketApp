@@ -7,15 +7,61 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
+require('dotenv').config();
 var express = require('express'); // Express web server framework
+const app = express();
+var router = express.Router();
 var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const mongo = require('mongodb');
+const mongoose = require('mongoose');
 
-var client_id = ''; // Your client id
-var client_secret = ''; // Your secret
+
+// const client_id = process.env.client_ID;
+// const client_secret = process.env.client_PWRD;
+var client_id = '0ef367f85c164b7fbe7c36f68567d404'; // Your client id
+var client_secret = '6ccc84bdf4e747469af720e051e34c36'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+
+
+// Database file requirements
+const userRoutes = require('./routes/users');
+
+// Connect to mongo database
+mongoose.connect(
+  "mongodb://rrhodes:" + 
+  process.env.MONGO_ATLAS_PW + 
+  "@node-ticket-shard-00-00-aoyxz.mongodb.net:27017,node-ticket-shard-00-01-aoyxz.mongodb.net:27017,node-ticket-shard-00-02-aoyxz.mongodb.net:27017/test?ssl=true&replicaSet=node-ticket-shard-0&authSource=admin&retryWrites=true", 
+  { useNewUrlParser: true }
+);
+
+mongoose.Promise = global.Promise;
+
+// var db;       // = db('localhost:8888/node-ticket');
+// //Users = new Mongo.Collection('users');
+
+// app.use(morgan('dev'));
+// app.use(bodyParser.urlencoded({extended: false}));
+// app.use(bodyParser.json());
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', '*');
+//   if (req.method === 'OPTIONS') {
+//       res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+//       return res.status(200).json({});
+//   }
+//   next();
+// });
+
+// // Routes which should handle requests
+// app.use('/users', userRoutes);
+
+// // Catch-all error for when going to route that doesn't exist above
+
 
 /**
  * Generates a random string containing numbers and letters
@@ -34,7 +80,7 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-var app = express();
+// var app = express();
 
 app.use(express.static(__dirname + '/public'))
    .use(cors())
@@ -171,5 +217,56 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
+
+var db;       // = db('localhost:8888/node-ticket');
+//Users = new Mongo.Collection('users');
+
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+      return res.status(200).json({});
+  }
+  next();
+});
+
+// Routes which should handle requests
+app.use('/users', userRoutes);
+
+// Catch-all error for when going to route that doesn't exist above
+app.use((req, res, next) => {
+  const error = new Error('Not found');
+  error.status = 404;
+  next(error);
+})
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+      error: {
+          message: error.message
+      }
+  });
+});
+
+
+  // insert token into DB
+  // var token_doc = {token_id: access_token};
+  // db.collection("users").insertOne(token_doc, function(err, res) {
+  //   if (err) throw err;
+  //   console.log("Document inserted");
+  // // close connection when done
+  //   db.close();
+  // })
+
+
+
+
 console.log('Listening on 8888');
 app.listen(8888);
+
+module.exports = app;
