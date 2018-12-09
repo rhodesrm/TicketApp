@@ -137,6 +137,9 @@ app.get('/callback', function(req, res) {
 
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
+        
+        // store token_id is variable to put in DB document
+        var user_doc = {token_id: access_token};
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -255,13 +258,12 @@ app.use((error, req, res, next) => {
 
 
   // insert token into DB
-  // var token_doc = {token_id: access_token};
-  // db.collection("users").insertOne(token_doc, function(err, res) {
-  //   if (err) throw err;
-  //   console.log("Document inserted");
-  // // close connection when done
-  //   db.close();
-  // })
+  db.collection("users").insertOne(user_doc, function(err, res) {
+    if (err) throw err;
+    console.log("Document inserted");
+  // close connection when done
+    db.close();
+  })
 
 
 

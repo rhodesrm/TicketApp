@@ -11,11 +11,11 @@ const userRoutes = require('./api/routes/users');
 mongoose.connect(
     "mongodb://rrhodes:" + 
     process.env.MONGO_ATLAS_PW + 
-    "@node-ticket-shard-00-00-aoyxz.mongodb.net:27017,node-ticket-shard-00-01-aoyxz.mongodb.net:27017,node-ticket-shard-00-02-aoyxz.mongodb.net:27017/test?ssl=true&replicaSet=node-ticket-shard-0&authSource=admin&retryWrites=true", 
-    {
-        useMongoClient: true
-    }
+    "@node-ticket-shard-00-00-aoyxz.mongodb.net:27017,node-ticket-shard-00-01-aoyxz.mongodb.net:27017,node-ticket-shard-00-02-aoyxz.mongodb.net:27017/test?ssl=true&replicaSet=node-ticket-shard-0&authSource=admin&retryWrites=true",
+    { useNewUrlParser: true }
 );
+
+mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));

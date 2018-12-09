@@ -111,9 +111,13 @@ router.patch("/:userId", (req, res, next) => {
     const id = req.params.userId;
     const updateOps = {};
     for (const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
-    }
-    User.update({_id: id}, { $set: updateOps })
+        updateOps[ops.propFirstName] = ops.value;
+        updateOps[ops.propLastName] = ops.value;
+        updateOps[ops.propPassword] = ops.value;
+        updateOps[ops.propEmail] = ops.value;
+        updateOps[ops.propLocation] = ops.value;
+    }                                        
+    User.update({_id: id}, { $set: updateOps } )
     .exec()
     .then(result => {
         res.status(200).json({
@@ -135,7 +139,13 @@ router.delete("/:userId", (req, res, next) => {
     User.remove({_id: id})
     .exec()
     .then(result => {
-        res.status(200).json(result);
+        res.status(200).json({
+            message: 'User deleted',
+            request: {
+                type: 'POST',
+                url: 'localhost:3000/users'
+            }
+        });
     })
     .catch(err => {
         console.log(err);
