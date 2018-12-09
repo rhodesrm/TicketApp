@@ -148,10 +148,21 @@ app.get('/callback', function(req, res) {
         };
 
         var topArtists = {
-          url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=100',
+          url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=25',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
+
+        function topArtistNameFunc(topArtists) {
+          topArtistNames = [];
+          for (i=0;i<topArtists.length;i++) {
+              topArtistNames = topArtistNames + topArtists[i].name;
+          }
+          console.log(topArtistNames);
+      }
+
+      topArtistNameList = topArtistNameFunc(topArtists);
+      
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
@@ -166,8 +177,11 @@ app.get('/callback', function(req, res) {
           console.log(obj1['name']);
         });
 
+        userCity = "boston";
+        TM_key = process.env.TM_key;
+
         var localConcerts = {
-          url: 'https://app.ticketmaster.com/discovery/v2/events.json?city=boston&classificationId=KZFzniwnSyZfZ7v7nJ&apikey=', //ADD TICKETMASTER API KEY HERE
+          url: 'https://app.ticketmaster.com/discovery/v2/events.json?city='+userCity+'&classificationId=KZFzniwnSyZfZ7v7nJ&apikey='+TM_key, //ADD TICKETMASTER API KEY HERE
           json: true
         };
 
@@ -221,8 +235,8 @@ app.get('/refresh_token', function(req, res) {
 });
 
 
-var db;       // = db('localhost:8888/node-ticket');
-//Users = new Mongo.Collection('users');
+var db;
+// Users = new Mongo.Collection('users');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -257,7 +271,7 @@ app.use((error, req, res, next) => {
 });
 
 
-  // // insert token into DB
+  // // insert user into DB
   // db.collection("users").insertOne(user_doc, function(err, res) {
   //   if (err) throw err;
   //   console.log("Document inserted");
