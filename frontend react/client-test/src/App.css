@@ -1,0 +1,42 @@
+.Example {
+  text-align: center;
+}
+
+.ConcertDisplay{
+  position: relative;
+  width:50%;
+  padding-bottom: 20px;
+}
+
+.ResultsTable{
+  border: 1px solid black;
+  height:100px;
+}
+
+.imgcontainer{
+  height: 100px;
+}
+
+.imagecell{
+  width: 30%;
+}
+
+.textcell{
+  width:60%;
+  text-align: center
+}
+
+.texttable{
+  width: 80%;
+  height: 100px;
+}
+
+.buttoncell{
+  width: auto;
+  padding-right:20px;
+}
+
+.eventimage{
+  width:auto;
+  height: 100px;
+}
