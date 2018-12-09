@@ -257,13 +257,13 @@ app.use((error, req, res, next) => {
 });
 
 
-  // insert token into DB
-  db.collection("users").insertOne(user_doc, function(err, res) {
-    if (err) throw err;
-    console.log("Document inserted");
-  // close connection when done
-    db.close();
-  })
+  // // insert token into DB
+  // db.collection("users").insertOne(user_doc, function(err, res) {
+  //   if (err) throw err;
+  //   console.log("Document inserted");
+  // // close connection when done
+  //   db.close();
+  // })
 
 
 
