@@ -26,7 +26,11 @@ class ParseDisplay extends Component {
                 </tr>
                 <tr>
                   <td>{Data.dates.start.localDate}</td>
-                  <td>${Data.priceRanges[0].min} - ${Data.priceRanges[0].max}</td>
+                  {Data.priceRanges ?
+                    <div>
+                      <td>${Data.priceRanges[0].min} - ${Data.priceRanges[0].max}</td>
+                    </div> : <td> <center> Unable to find prices </center> </td>
+                  }
                 </tr>
                 </table>
               </div>

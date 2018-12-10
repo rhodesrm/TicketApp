@@ -3,6 +3,9 @@ var router = express.Router();
 var querystring = require('querystring');
 var app = express();
 var request = require("request");
+var apikey = require("./keys");
+
+global.access_token = '';
 
 let redirect_uri = 
   process.env.REDIRECT_URI || 
@@ -19,13 +22,13 @@ router.get('/', function(req, res, next) {
     },
     headers: {
       'Authorization': 'Basic ' + (new Buffer(
-        process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET
+        apikey.SPOTIFY_CLIENT_ID + ':' + apikey.SPOTIFY_CLIENT_SECRET
       ).toString('base64'))
     },
     json: true
   }
   request.post(authOptions, function(error, response, body) {
-    var access_token = body.access_token
+    access_token = body.access_token
     let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
     res.redirect(uri + '?access_token=' + access_token)
   })
