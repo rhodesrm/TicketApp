@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import queryString from 'query-string';
 
 class ParseDisplay extends Component {
   render () {
@@ -43,16 +44,19 @@ class ParseDisplay extends Component {
 }
 
 class App extends Component {
-  state = {users: []}
   constructor () {
     super()
-    this.state = {otherData: {}}
+    this.state = {otherData: {}, userData: {}}
   }
 
   componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
+    let parsed = queryString.parse(window.location.search);
+    let accessToken = parsed.access_token;
+
+    fetch('https://api.spotify.com/v1/me',
+      {headers: {'Authorization': 'Bearer ' + accessToken}
+    }).then(res => res.json())
+      .then(userData => this.setState( {userData} ));
 
     fetch('/ticketmaster')
       .then(response => response.json())
@@ -62,16 +66,20 @@ class App extends Component {
   render() {
     return (
       <div className="Parse">
-      {console.log(this.state.otherData)}
-      {this.state.otherData._embedded ?
+      {console.log(this.state.userData)}
+      {this.state.userData.display_name ?
         <div>
-          <center>
-          <h1> Concerts </h1>
-          {this.state.otherData._embedded.events.map(event =>
-            <ParseDisplay event={event}/>)}
-          </center>
-        </div> : <center> <button onClick={() => window.location='http://localhost:8888/login'}
-        style={{padding: '20px', 'fontSize': '50px', 'marginTop': '20px'}}> Sign in with Spotify </button> </center>
+        {this.state.otherData._embedded ?
+          <div>
+            <center>
+            <h1> Welcome {this.state.userData.display_name}! </h1>
+            {this.state.otherData._embedded.events.map(event =>
+              <ParseDisplay event={event}/>)}
+            </center>
+          </div> : <center> <h1> No Ticketmaster Data </h1> </center>
+        }
+        </div> :  <center> <button onClick={() => window.location='http://localhost:3001/login'}
+          style={{padding: '20px', 'fontSize': '50px', 'marginTop': '20px'}}> Sign in with Spotify </button> </center>
       }
       </div>
     );
