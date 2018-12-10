@@ -150,7 +150,7 @@ app.get('/callback', function(req, res) {
         //   });
         // }
         var localConcerts = {
-          //url: 'https://app.ticketmaster.com/discovery/v2/events.json?keyword='+artistName+'&city=boston&classificationId=KZFzniwnSyZfZ7v7nJ&apikey=AqksmRI0bTOFqY34PEzOtGHLHgfS8ngE',
+          //url: 'https://app.ticketmaster.com/discovery/v2/events.json?keyword='+artistName+'&city=boston&classificationId=KZFzniwnSyZfZ7v7nJ&apikey='+TM_key,
           url: 'https://app.ticketmaster.com/discovery/v2/events.json?city=new york&classificationId=KZFzniwnSyZfZ7v7nJ&page=1&size=200&apikey='+TM_key,
           json: true
         };
