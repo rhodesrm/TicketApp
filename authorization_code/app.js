@@ -7,61 +7,17 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-require('dotenv').config();
 var express = require('express'); // Express web server framework
-const app = express();
-var router = express.Router();
 var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const mongo = require('mongodb');
-const mongoose = require('mongoose');
+//var idfile = require('./idfile');
 
-
-// const client_id = process.env.client_ID;
-// const client_secret = process.env.client_PWRD;
-var client_id = '0ef367f85c164b7fbe7c36f68567d404'; // Your client id
-var client_secret = '6ccc84bdf4e747469af720e051e34c36'; // Your secret
+let TM_key = require('./idfile').TM_key;
+let client_id = require('./idfile').client_ID; // Your client id
+let client_secret = require('./idfile').client_PWRD; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-
-
-// Database file requirements
-const userRoutes = require('./routes/users');
-
-// Connect to mongo database
-mongoose.connect(
-  "mongodb://rrhodes:" + 
-  process.env.MONGO_ATLAS_PW + 
-  "@node-ticket-shard-00-00-aoyxz.mongodb.net:27017,node-ticket-shard-00-01-aoyxz.mongodb.net:27017,node-ticket-shard-00-02-aoyxz.mongodb.net:27017/test?ssl=true&replicaSet=node-ticket-shard-0&authSource=admin&retryWrites=true", 
-  { useNewUrlParser: true }
-);
-
-mongoose.Promise = global.Promise;
-
-// var db;       // = db('localhost:8888/node-ticket');
-// //Users = new Mongo.Collection('users');
-
-// app.use(morgan('dev'));
-// app.use(bodyParser.urlencoded({extended: false}));
-// app.use(bodyParser.json());
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', '*');
-//   if (req.method === 'OPTIONS') {
-//       res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-//       return res.status(200).json({});
-//   }
-//   next();
-// });
-
-// // Routes which should handle requests
-// app.use('/users', userRoutes);
-
-// // Catch-all error for when going to route that doesn't exist above
-
 
 /**
  * Generates a random string containing numbers and letters
@@ -80,7 +36,7 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-// var app = express();
+var app = express();
 
 app.use(express.static(__dirname + '/public'))
    .use(cors())
@@ -137,9 +93,6 @@ app.get('/callback', function(req, res) {
 
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
-        
-        // store token_id is variable to put in DB document
-        var user_doc = {token_id: access_token};
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -148,50 +101,86 @@ app.get('/callback', function(req, res) {
         };
 
         var topArtists = {
-          url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=25',
+          url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=100',
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
-
-        function topArtistNameFunc(topArtists) {
-          topArtistNames = [];
-          for (i=0;i<topArtists.length;i++) {
-              topArtistNames = topArtistNames + topArtists[i].name;
-          }
-          console.log(topArtistNames);
-      }
-
-      topArtistNameList = topArtistNameFunc(topArtists);
-      
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           console.log(body);
         });
-
+        var artistsLength;
         //use access token to access user's top artists
         request.get(topArtists, function(error2, response2, body2){
-          console.log(body2);
+          //console.log(body2);
           obj = body2['items'];
-          obj1 = obj[0];
+          artistsLength = obj.length;
+          var obj1 = obj[0];
           console.log(obj1['name']);
+          // var i;
+          // for (i = 0; i < artistsLength; i++){
+          //   artistName = obj[i]['name'];
+          //   if (artistName == 'Aminé') { artistName = 'amine';}
+          //   //console.log(artistName);
+          //   artisturl = 'https://app.ticketmaster.com/discovery/v2/events.json?keyword='+artistName+'&city=boston&classificationId=KZFzniwnSyZfZ7v7nJ&apikey=AqksmRI0bTOFqY34PEzOtGHLHgfS8ngE';
+          //   //console.log(artisturl);
+          //   getConcerts(artisturl);
+            
+          // }
         });
 
-        userCity = "boston";
-        TM_key = process.env.TM_key;
+        // function getConcerts(artisturl){
+        //   request(artisturl, { json: true }, (err3, response3, body3) => {
+        //     console.log(artisturl);
 
+        //     if ( !err3) {  console.log(body3);}
+        //       // console.log('no error')
+        //       // var eventsLength = body3['page']['totalElements'];
+        //       // if (eventsLength > 0){
+        //       //   console.log(body3);
+        //       //   var obj2 = body3['_embedded'];
+        //       //   var obj3 = obj2['events'];
+        //       //   var obj4 = obj3[0];
+        //       //   console.log(obj4['name'])
+        //       //   //console.log(body3['_embedded']['events'][0]['name']);
+        //       //   //console.log(body3);//['page']['totalElements']);
+        //       // }
+            
+        //   });
+        // }
         var localConcerts = {
-          url: 'https://app.ticketmaster.com/discovery/v2/events.json?city='+userCity+'&classificationId=KZFzniwnSyZfZ7v7nJ&apikey='+TM_key, //ADD TICKETMASTER API KEY HERE
+          //url: 'https://app.ticketmaster.com/discovery/v2/events.json?keyword='+artistName+'&city=boston&classificationId=KZFzniwnSyZfZ7v7nJ&apikey=AqksmRI0bTOFqY34PEzOtGHLHgfS8ngE',
+          url: 'https://app.ticketmaster.com/discovery/v2/events.json?city=new york&classificationId=KZFzniwnSyZfZ7v7nJ&page=1&size=200&apikey='+TM_key,
           json: true
         };
 
         request.get(localConcerts, function(error3, response3, body3){
           //console.log(body3);
-          obj2 = body3['_embedded'];
+          //body3['page']['number'] = '3';
+          //console.log( body3['page']['number']);
+          var obj2 = body3['_embedded'];
           //console.log(obj2);
-          obj3 = obj2['events'];
-          obj3 = obj3[5];
-          console.log(obj3['name'])
+          var obj3 = obj2['events'];
+          var obj4 = obj3[5];
+          var eventsLength = body3['page']['totalElements'];
+          //console.log(obj4['name'])
+
+          var i;
+          var j;
+          console.log(obj3.length);
+          for (i = 0; i < obj3.length; i++){
+            var currEvent = obj3[i];
+            var currName = currEvent['name'];
+            for (j = 0; j < artistsLength; j++){
+              var currArtist = obj[j]['name'];
+              if(currName.includes(currArtist)){
+                console.log(currArtist);
+                console.log(currName);
+                console.log(currEvent['url']);
+              }
+            }
+          }
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -234,55 +223,5 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-
-var db;
-// Users = new Mongo.Collection('users');
-
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', '*');
-  if (req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-      return res.status(200).json({});
-  }
-  next();
-});
-
-// Routes which should handle requests
-app.use('/users', userRoutes);
-
-// Catch-all error for when going to route that doesn't exist above
-app.use((req, res, next) => {
-  const error = new Error('Not found');
-  error.status = 404;
-  next(error);
-})
-
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-      error: {
-          message: error.message
-      }
-  });
-});
-
-
-  // // insert user into DB
-  // db.collection("users").insertOne(user_doc, function(err, res) {
-  //   if (err) throw err;
-  //   console.log("Document inserted");
-  // // close connection when done
-  //   db.close();
-  // })
-
-
-
-
 console.log('Listening on 8888');
 app.listen(8888);
-
-module.exports = app;

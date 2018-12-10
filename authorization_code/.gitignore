@@ -1,2 +1,4 @@
 # ignore nodemon file
 nodemon.json
+node_modules
+idfile.js
