@@ -12,6 +12,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var mysql = require('mysql');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -121,6 +123,25 @@ app.get('/spotifyuser', function(req, res, next) {
   	}
 
     request.get(userOptions, function(userError, userResponse, userBody){
+    	// console.log('Display Name: ' + userBody.display_name);
+    	// console.log('Id: '+ userBody.id);
+    	var x = userBody.display_name;
+    	var y = userBody.id;
+    	var con = mysql.createConnection({
+    		host: "localhost",
+    		user: "root",
+    		password: "",
+    		database: "user_accounts"
+    	});
+
+    	con.connect(function(err){
+    		if (err) throw err;
+
+    		var sql = "INSERT INTO user_accounts (Username, User_ID) VALUES ('"+x+"','"+y+"')";
+    		con.query(sql, function (err, result){
+    			if (err) throw err;
+    		});
+    	});
     	res.send(userBody);
     })
   })
