@@ -4,7 +4,7 @@
 /node_modules
 
 # Keys
-/routes/keys.js
+/keys.js
 
 # misc
 .DS_Store

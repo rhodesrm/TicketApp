@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import queryString from 'query-string';
 
 class ParseDisplay extends Component {
   render () {
@@ -12,7 +11,7 @@ class ParseDisplay extends Component {
             <td className='imagecell'>
               <div className="imgcontainer">
                 <center>
-                <img className='eventimage' src={Data.images[0].url}>
+                <img className='eventimage' alt='' src={Data.images[0].url}>
                 </img>
                 </center>
               </div> 
