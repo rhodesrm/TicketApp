@@ -126,47 +126,47 @@ app.get('/spotifyuser', function(req, res, next) {
   })
 }); 
 
-app.get('/topartists', function(req, res, next) {
-  let code = req.query['code']
-  let authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    form: {
-      code: code,
-      redirect_uri,
-      grant_type: 'authorization_code'
-    },
-    headers: {
-      'Authorization': 'Basic ' + (new Buffer(
-        apikey.SPOTIFY_CLIENT_ID + ':' + apikey.SPOTIFY_CLIENT_SECRET
-      ).toString('base64'))
-    },
-    json: true
-  };
+// app.get('/topartists', function(req, res, next) {
+//   let code = req.query['code']
+//   let authOptions = {
+//     url: 'https://accounts.spotify.com/api/token',
+//     form: {
+//       code: code,
+//       redirect_uri,
+//       grant_type: 'authorization_code'
+//     },
+//     headers: {
+//       'Authorization': 'Basic ' + (new Buffer(
+//         apikey.SPOTIFY_CLIENT_ID + ':' + apikey.SPOTIFY_CLIENT_SECRET
+//       ).toString('base64'))
+//     },
+//     json: true
+//   };
 
-  request.post(authOptions, function(error, response, body) {
+//   request.post(authOptions, function(error, response, body) {
 
-    let topArtists = {
-      url: 'https://api.spotify.com/v1/me/top/artists',
-      headers: { 'Authorization': 'Bearer ' + access_token },
-      json: true
-    };
+//     let topArtists = {
+//       url: 'https://api.spotify.com/v1/me/top/artists',
+//       headers: { 'Authorization': 'Bearer ' + access_token },
+//       json: true
+//     };
 
-    let artistsLength;
-    //use access token to access user's top artists
-    request.get(topArtists, function(error2, response2, body2){
-		obj = body2['items'];
-		artistsLength = obj.length;
-		let obj1 = obj[0];
-		artistsName = obj1['name']
-		let artistList = [];
-		let x;
-		for (x = 0; x < artistsLength; x++){
-			artistList.push(obj[x]['name']);
-		}
-		res.send(artistList);
-		});
-	});
-});
+//     let artistsLength;
+//     //use access token to access user's top artists
+//     request.get(topArtists, function(error2, response2, body2){
+// 		obj = body2['items'];
+// 		artistsLength = obj.length;
+// 		let obj1 = obj[0];
+// 		artistsName = obj1['name']
+// 		let artistList = [];
+// 		let x;
+// 		for (x = 0; x < artistsLength; x++){
+// 			artistList.push(obj[x]['name']);
+// 		}
+// 		res.send(artistList);
+// 		});
+// 	});
+// });
 
 app.get('/tm', function(req, res, next) {
   let code = req.query['code']
