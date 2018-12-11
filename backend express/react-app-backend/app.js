@@ -67,7 +67,6 @@ app.get('/login', function(req, res, next) {
 
 app.get('/callback', function(req, res) {
   let code = req.query['code'] || null
-  //module.exports.cbCode = code;
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     form: {
@@ -156,9 +155,7 @@ app.get('/topartists', function(req, res, next) {
     //use access token to access user's top artists
     request.get(topArtists, function(error2, response2, body2){
 		obj = body2['items'];
-		// console.log(obj);
 		artistsLength = obj.length;
-		console.log(artistsLength);
 		let obj1 = obj[0];
 		artistsName = obj1['name']
 		let artistList = [];
@@ -166,7 +163,6 @@ app.get('/topartists', function(req, res, next) {
 		for (x = 0; x < artistsLength; x++){
 			artistList.push(obj[x]['name']);
 		}
-		// res.send(obj1['name']);
 		res.send(artistList);
 		});
 	});
@@ -190,51 +186,59 @@ app.get('/tm', function(req, res, next) {
   };
 
   request.post(authOptions, function(error, response, body) {
-
     let topArtists = {
-      url: 'https://api.spotify.com/v1/me/top/artists',
+      url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=100',
       headers: { 'Authorization': 'Bearer ' + access_token },
       json: true
     };
 
-    let bostonMusic = {
-    	url: 'https://app.ticketmaster.com/discovery/v2/events.json?classificationName=Music&size=5&stateCode=MA&apikey='+apikey.TICKETMASTER_ID,
+    let localConcerts = {
+    	url: 'https://app.ticketmaster.com/discovery/v2/events.json?city=boston&classificationId=KZFzniwnSyZfZ7v7nJ&page=0&size=200&apikey='+apikey.TICKETMASTER_ID,
     	json: true
     };
 
     let artistsLength;
     //use access token to access user's top artists
     request.get(topArtists, function(error2, response2, body2){
-    	obj = body2['items'];
-    	// console.log(obj);
-    	artistsLength = obj.length;
-    	let obj1 = obj[0];
-    	//res.send(obj);
-      });
+		obj = body2['items'];
+		artistsLength = obj.length;
+		let obj1 = obj[0];
+		artistsName = obj1['name']
+		let artistList = [];
+		let x;
+		for (x = 0; x < artistsLength; x++){
+			artistList.push(obj[x]['name']);
+		}
+		});
 
-    request.get(bostonMusic, function(error3, response3, body3){
-    	let obj2 = body3['_embedded'];
-		let obj3 = obj2['events'];
-		let obj4 = obj3[5];
-		let eventsLength = body3['page']['totalElements'];
-		let i;
-		let j;
-		console.log(obj4);
-		console.log(obj);
-		// console.log(obj3.length);
-		// for (i = 0; i < obj3.length; i++){
-		// 	let currEvent = obj3[i];
-		// 	let currName = currEvent['name'];
-		// 	for (j = 0; j < artistsLength; j++){
-		// 	  let currArtist = obj[j]['name'];
-		// 	  if(currName.includes(currArtist)){
-		// 	    console.log(currArtist);
-		// 	    console.log(currName);
-		// 	    console.log(currEvent['url']);
-		// 		}
-		// 	}
-		// }
-		res.send('Test');
+    request.get(localConcerts, function(error3, response3, body3){
+    	var obj2 = body3['_embedded'];
+		var obj3 = obj2['events'];
+		var obj4 = obj3[5];
+		var minPrice = obj4['priceRanges']['min'];
+		var eventsLength = body3['page']['totalElements'];
+		var i;
+		var j;
+		var results = [];
+		for (i = 0; i < obj3.length; i++){
+			var currEvent = obj3[i];
+			var currName = currEvent['name'];
+			for (j = 0; j < artistsLength; j++){
+			  var currArtist = obj[j]['name'];
+			  if(currName.includes(currArtist)){
+			    results.push(obj3[i]);
+			    // console.log(obj3[i]);
+			    // console.log('HIT!');
+			    // console.log(currArtist);
+			    // console.log(currName);
+			    // console.log(currEvent['url']);
+			  }
+			}
+		}
+		var events = results
+		var _embedded = {events}
+		var output = {_embedded}
+		res.send(output);
     });
   })
 }); 

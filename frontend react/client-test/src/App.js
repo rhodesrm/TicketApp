@@ -49,7 +49,7 @@ class ParseDisplay extends Component {
 class App extends Component {
   constructor () {
     super()
-    this.state = {otherData: {}, userData: {}}
+    this.state = {otherData: {}, userData: {}, loggedIn: false}
   }
 
   componentDidMount() {
@@ -58,9 +58,16 @@ class App extends Component {
     .then(res => res.json())
     .then(userData => this.setState({userData}));
 
-    fetch('/ticketmaster')
-      .then(response => response.json())
-      .then(otherData => this.setState( {otherData} ));
+  setTimeout(
+    fetch('/tm')
+    .then(response => response.json())
+    .then(otherData => this.setState({otherData})),5000);
+
+  // if(this.state.loggedIn){
+    
+  // }
+
+
   }
 
   render() {
@@ -76,9 +83,9 @@ class App extends Component {
             {this.state.otherData._embedded.events.map(event =>
               <ParseDisplay event={event}/>)}
             </center>
-          </div> : <center> <h1> No Ticketmaster Data </h1> </center>
+          </div> : <center> <h1> Loading... </h1> </center>
         }
-        </div> :  <center> <button onClick={() => window.location='http://localhost:3001/login'}
+        </div> :  <center> <button className="SpotifyButton" onClick={() => window.location='http://localhost:3001/login'}
           style={{padding: '20px', 'fontSize': '50px', 'marginTop': '20px'}}> Sign in with Spotify </button> </center>
       }
       </div>
